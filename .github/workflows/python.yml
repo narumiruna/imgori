@@ -1,0 +1,33 @@
+name: Python
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: ["3.9"]
+        poetry-version: ["1.7.1"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: poetry
+      - name: Install dependencies
+        run: |
+          poetry install
+          poetry run pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
+      - name: Lint
+        run: make lint
+      - name: Test
+        run: make test
