@@ -1,5 +1,6 @@
 import torch
-from template.models import LeNet
+
+from imgori.models import LeNet
 
 
 @torch.no_grad()
