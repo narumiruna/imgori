@@ -34,10 +34,11 @@ class RandomHorizontalFlipDataset(Dataset):
         path = self.paths[index]
         img = Image.open(path).convert("RGB")
 
+        flip = random.random() < self.p
+        if flip:
+            img = ImageOps.mirror(img)
+
         if self.transform is not None:
             img = self.transform(img)
 
-        if random.random() < self.p:
-            return ImageOps.mirror(img), 1
-
-        return img, 0
+        return img, int(flip)
