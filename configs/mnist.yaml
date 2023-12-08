@@ -1,11 +1,12 @@
 device: cuda
 
 job:
-  name: MNISTTrainingJob
+  name: ClassificationTrainingJob
 
 trainer:
-  name: MNISTTrainer
+  name: ClassificationTrainer
   num_epochs: 20
+  num_classes: 10
 
 dataset:
   name: MNISTDataLoader

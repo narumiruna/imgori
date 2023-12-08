@@ -1,19 +1,32 @@
 import mlflow
 import torch
+import torch.nn as nn
 import torch.nn.functional as F
 from mlconfig import register
+from torch.optim import Optimizer
+from torch.optim.lr_scheduler import LRScheduler
+from torch.utils.data import DataLoader
 from torchmetrics import Accuracy
 from torchmetrics import MeanMetric
 from tqdm import tqdm
 from tqdm import trange
 
+from ..typing import PathLike
 from .trainer import Trainer
 
 
 @register
-class MNISTTrainer(Trainer):
+class ClassificationTrainer(Trainer):
     def __init__(
-        self, device, model, optimizer, scheduler, train_loader, test_loader, num_epochs
+        self,
+        device: torch.device,
+        model: nn.Module,
+        optimizer: Optimizer,
+        scheduler: LRScheduler,
+        train_loader: DataLoader,
+        test_loader: DataLoader,
+        num_epochs: int,
+        num_classes: int,
     ):
         self.device = device
         self.model = model
@@ -22,6 +35,7 @@ class MNISTTrainer(Trainer):
         self.train_loader = train_loader
         self.test_loader = test_loader
         self.num_epochs = num_epochs
+        self.num_classes = num_classes
 
         self.epoch = 1
         self.best_acc = 0
@@ -54,7 +68,7 @@ class MNISTTrainer(Trainer):
         self.model.train()
 
         loss_metric = MeanMetric()
-        acc_metric = Accuracy()
+        acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes)
 
         for x, y in tqdm(self.train_loader):
             x = x.to(self.device)
@@ -77,7 +91,7 @@ class MNISTTrainer(Trainer):
         self.model.eval()
 
         loss_metric = MeanMetric()
-        acc_metric = Accuracy()
+        acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes)
 
         for x, y in tqdm(self.test_loader):
             x = x.to(self.device)
@@ -96,7 +110,7 @@ class MNISTTrainer(Trainer):
 
         return loss_metric.compute().item(), test_acc
 
-    def save_checkpoint(self, f):
+    def save_checkpoint(self, f: PathLike):
         self.model.eval()
 
         checkpoint = {
@@ -110,7 +124,7 @@ class MNISTTrainer(Trainer):
         torch.save(checkpoint, f)
         mlflow.log_artifact(f)
 
-    def resume(self, f):
+    def resume(self, f: PathLike):
         checkpoint = torch.load(f, map_location=self.device)
 
         self.model.load_state_dict(checkpoint["model"])

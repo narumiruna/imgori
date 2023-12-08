@@ -4,13 +4,14 @@ from mlconfig import instantiate
 from mlconfig import register
 from omegaconf import OmegaConf
 
+from ..typing import PathLike
 from ..utils import manual_seed
 from .job import Job
 
 
 @register
-class MNISTTrainingJob(Job):
-    def run(self, config: OmegaConf, resume=None) -> None:
+class ClassificationTrainingJob(Job):
+    def run(self, config: OmegaConf, resume: PathLike = None) -> None:
         mlflow.log_text(OmegaConf.to_yaml(config), artifact_file="config.yaml")
 
         mlflow.log_params(config.log_params)
