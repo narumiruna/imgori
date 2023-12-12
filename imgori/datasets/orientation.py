@@ -1,4 +1,5 @@
 import random
+from enum import Enum
 from pathlib import Path
 from typing import Callable
 
@@ -16,17 +17,22 @@ from .utils import get_image_extensions
 from .utils import read_image
 
 
-class RandomHorizontalFlipDataset(Dataset):
-    def __init__(
-        self, root: str, transform: Callable, p: float = 0.5, cache: bool = True
-    ) -> None:
+class Orientation(int, Enum):
+    NORMAL = 0
+    FLIP = 1
+    CLOCKWISE = 2
+    COUNTERCLOCKWISE = 3
+    MIRROR = 4
+    MIRROR_FLIP = 5
+    MIRROR_CLOCKWISE = 6
+    MIRROR_COUNTERCLOCKWISE = 7
+
+
+class RandomOrientationDataset(Dataset):
+    def __init__(self, root: str, transform: Callable, cache: bool = True) -> None:
         self.root = Path(root)
         self.transform = transform
-        self.p = p
         self.cache = cache
-
-        if self.p < 0 or self.p > 1:
-            raise ValueError("p must be in [0, 1]")
 
         exts = get_image_extensions()
         self.images = [p for p in self.root.rglob("*") if p.suffix in exts]
@@ -42,18 +48,38 @@ class RandomHorizontalFlipDataset(Dataset):
         if not self.cache:
             img = read_image(img)
 
-        flip = random.random() < self.p
-        if flip:
-            img = ImageOps.mirror(img)
+        ori = random.choice(list(Orientation))
+        match ori:
+            case Orientation.NORMAL:
+                pass
+            case Orientation.FLIP:
+                img = ImageOps.flip(img)
+            case Orientation.CLOCKWISE:
+                img = img.rotate(90)
+            case Orientation.COUNTERCLOCKWISE:
+                img = img.rotate(270)
+            case Orientation.MIRROR:
+                img = ImageOps.mirror(img)
+            case Orientation.MIRROR_FLIP:
+                img = ImageOps.mirror(img)
+                img = ImageOps.flip(img)
+            case Orientation.MIRROR_CLOCKWISE:
+                img = ImageOps.mirror(img)
+                img = img.rotate(90)
+            case Orientation.MIRROR_COUNTERCLOCKWISE:
+                img = ImageOps.mirror(img)
+                img = img.rotate(270)
+            case _:
+                raise ValueError(f"invalid orientation: {ori}")
 
         if self.transform is not None:
             img = self.transform(img)
 
-        return img, int(flip)
+        return img, int(ori)
 
 
 @register
-class RandomHorizontalFlipDataLoader(DataLoader):
+class RandomOrientationDataLoader(DataLoader):
     def __init__(
         self, root: str, train: bool, batch_size: int, image_size: int = 256, **kwargs
     ) -> None:
@@ -82,8 +108,8 @@ class RandomHorizontalFlipDataLoader(DataLoader):
                 ]
             )
 
-        dataset = RandomHorizontalFlipDataset(root, transform=transform)
+        dataset = RandomOrientationDataset(root, transform=transform)
 
-        super(RandomHorizontalFlipDataLoader, self).__init__(
+        super(RandomOrientationDataset, self).__init__(
             dataset=dataset, batch_size=batch_size, shuffle=train, **kwargs
         )
