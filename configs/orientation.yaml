@@ -2,10 +2,10 @@ device: mps
 num_classes: 8
 
 job:
-  name: ClassificationTrainingJob
+  name: ImgoriTrainJob
 
 trainer:
-  name: ClassificationTrainer
+  name: ImgoriTrainer
   num_epochs: 20
   num_classes: ${num_classes}
 

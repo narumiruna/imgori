@@ -1,1 +1,2 @@
-from .classification import ClassificationTrainer
+from .imgori import ImgoriTrainer
+from .mnist import MNISTTrainer

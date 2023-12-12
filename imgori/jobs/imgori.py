@@ -10,7 +10,7 @@ from .job import Job
 
 
 @register
-class ClassificationTrainingJob(Job):
+class ImgoriTrainJob(Job):
     def run(self, config: OmegaConf, resume: PathLike = None) -> None:
         mlflow.log_text(OmegaConf.to_yaml(config), artifact_file="config.yaml")
 

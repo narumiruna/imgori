@@ -16,7 +16,7 @@ from .trainer import Trainer
 
 
 @register
-class ClassificationTrainer(Trainer):
+class MNISTTrainer(Trainer):
     def __init__(
         self,
         device: torch.device,

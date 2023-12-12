@@ -1,1 +1,2 @@
-from .classification import ClassificationTrainingJob
+from .imgori import ImgoriTrainJob
+from .mnist import MNISTTrainJob

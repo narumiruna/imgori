@@ -1,10 +1,10 @@
 device: cuda
 
 job:
-  name: ClassificationTrainingJob
+  name: MNISTTrainJob
 
 trainer:
-  name: ClassificationTrainer
+  name: MNISTTrainer
   num_epochs: 20
   num_classes: 10
 
