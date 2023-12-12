@@ -5,11 +5,10 @@ from typing import Callable
 
 from loguru import logger
 from mlconfig import register
-from PIL import Image
 from PIL import ImageOps
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
-from torchvision import transforms
+from torchvision.transforms._presets import ImageClassification
 from tqdm import tqdm
 
 from ..typing import PILImage
@@ -81,35 +80,22 @@ class RandomOrientationDataset(Dataset):
 @register
 class RandomOrientationDataLoader(DataLoader):
     def __init__(
-        self, root: str, train: bool, batch_size: int, image_size: int = 256, **kwargs
+        self,
+        root: str,
+        train: bool,
+        batch_size: int,
+        crop_size: int = 224,
+        resize_size: int = 256,
+        **kwargs,
     ) -> None:
-        normalize = transforms.Normalize(
-            mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
-        )
-
-        if train:
-            transform = transforms.Compose(
-                [
-                    transforms.RandomResizedCrop(
-                        image_size, interpolation=Image.BICUBIC
-                    ),
-                    transforms.RandomHorizontalFlip(),
-                    transforms.ToTensor(),
-                    normalize,
-                ]
-            )
-        else:
-            transform = transforms.Compose(
-                [
-                    transforms.Resize(image_size + 32, interpolation=Image.BICUBIC),
-                    transforms.CenterCrop(image_size),
-                    transforms.ToTensor(),
-                    normalize,
-                ]
-            )
-
-        dataset = RandomOrientationDataset(root, transform=transform)
-
         super(RandomOrientationDataLoader, self).__init__(
-            dataset=dataset, batch_size=batch_size, shuffle=train, **kwargs
+            dataset=RandomOrientationDataset(
+                root,
+                transform=ImageClassification(
+                    crop_size=crop_size, resize_size=resize_size
+                ),
+            ),
+            batch_size=batch_size,
+            shuffle=train,
+            **kwargs,
         )
