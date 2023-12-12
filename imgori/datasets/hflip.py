@@ -51,7 +51,7 @@ class RandomHorizontalFlipDataset(Dataset):
 class RandomHorizontalFlipDataLoader(DataLoader):
     def __init__(
         self, root: str, train: bool, batch_size: int, image_size: int = 256, **kwargs
-    ):
+    ) -> None:
         normalize = transforms.Normalize(
             mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
         )
@@ -77,9 +77,7 @@ class RandomHorizontalFlipDataLoader(DataLoader):
                 ]
             )
 
-        dataset = RandomHorizontalFlipDataset(
-            root, train=train, transform=transform, download=True
-        )
+        dataset = RandomHorizontalFlipDataset(root, transform=transform)
 
         super(RandomHorizontalFlipDataLoader, self).__init__(
             dataset=dataset, batch_size=batch_size, shuffle=train, **kwargs
