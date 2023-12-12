@@ -1,2 +1,2 @@
-from .hflip import RandomHorizontalFlipDataset
+from .hflip import RandomHorizontalFlipDataLoader
 from .mnist import MNISTDataLoader
