@@ -1,4 +1,3 @@
-import random
 from enum import Enum
 from pathlib import Path
 from typing import Callable
@@ -40,14 +39,21 @@ class RandomOrientationDataset(Dataset):
             self.images = [read_image(p) for p in tqdm(self.images)]
 
     def __len__(self) -> int:
-        return len(self.images)
+        return len(self.images) * len(Orientation)
 
     def __getitem__(self, index: int) -> (PILImage, int):
-        img = self.images[index]
+        ori_len = len(Orientation)
+
+        img_index = index // ori_len
+        ori_index = index % ori_len
+        assert 0 <= img_index < len(self.images)
+        assert 0 <= ori_index < ori_len
+
+        img = self.images[img_index]
         if not self.cache:
             img = read_image(img)
 
-        ori = random.choice(list(Orientation))
+        ori = Orientation(ori_index)
         match ori:
             case Orientation.NORMAL:
                 pass
