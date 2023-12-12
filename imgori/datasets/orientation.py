@@ -110,6 +110,6 @@ class RandomOrientationDataLoader(DataLoader):
 
         dataset = RandomOrientationDataset(root, transform=transform)
 
-        super(RandomOrientationDataset, self).__init__(
+        super(RandomOrientationDataLoader, self).__init__(
             dataset=dataset, batch_size=batch_size, shuffle=train, **kwargs
         )
