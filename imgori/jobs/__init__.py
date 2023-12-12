@@ -1,1 +1,1 @@
-from .mnist import ClassificationTrainingJob
+from .classification import ClassificationTrainingJob

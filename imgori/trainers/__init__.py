@@ -1,1 +1,1 @@
-from .mnist import ClassificationTrainer
+from .classification import ClassificationTrainer
