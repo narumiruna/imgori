@@ -16,7 +16,7 @@ dataset:
   num_workers: 0
 
 model:
-  name: efficientnet
+  name: mobilenet_v3
   num_classes: ${num_classes}
 
 optimizer:

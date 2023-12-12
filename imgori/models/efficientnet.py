@@ -11,7 +11,6 @@ def efficientnet(num_classes: Optional[int] = None) -> nn.Module:
     model = efficientnet_b0(weights=EfficientNet_B0_Weights.IMAGENET1K_V1)
 
     if num_classes is not None:
-        in_features = model.classifier[1].in_features
-        model.classifier[1] = nn.Linear(in_features, num_classes)
+        model.classifier[-1] = nn.Linear(model.classifier[1].in_features, num_classes)
 
     return model
