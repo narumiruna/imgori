@@ -11,6 +11,7 @@ from torchvision.transforms._presets import ImageClassification
 from tqdm import tqdm
 
 from ..typing import PILImage
+from .phase import Phase
 from .utils import get_image_extensions
 from .utils import read_image
 
@@ -27,13 +28,16 @@ class Orientation(int, Enum):
 
 
 class RandomOrientationDataset(Dataset):
-    def __init__(self, root: str, transform: Callable, cache: bool = True) -> None:
+    def __init__(
+        self, root: str, phase: Phase, transform: Callable, cache: bool = True
+    ) -> None:
         self.root = Path(root)
+        self.phase = phase
         self.transform = transform
         self.cache = cache
 
         exts = get_image_extensions()
-        self.images = [p for p in self.root.rglob("*") if p.suffix in exts]
+        self.images = [p for p in self.root.rglob(f"{phase}/*") if p.suffix in exts]
         if cache:
             logger.info("cache images")
             self.images = [read_image(p) for p in tqdm(self.images)]
@@ -88,7 +92,7 @@ class RandomOrientationDataLoader(DataLoader):
     def __init__(
         self,
         root: str,
-        train: bool,
+        phase: Phase,
         batch_size: int,
         crop_size: int = 224,
         resize_size: int = 256,
@@ -97,11 +101,12 @@ class RandomOrientationDataLoader(DataLoader):
         super(RandomOrientationDataLoader, self).__init__(
             dataset=RandomOrientationDataset(
                 root,
+                phase=phase,
                 transform=ImageClassification(
                     crop_size=crop_size, resize_size=resize_size
                 ),
             ),
             batch_size=batch_size,
-            shuffle=train,
+            shuffle=True,
             **kwargs,
         )

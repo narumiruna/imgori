@@ -22,17 +22,17 @@ class ImgoriTrainJob(Job):
         model = instantiate(config.model).to(device)
         optimizer = instantiate(config.optimizer, model.parameters())
         scheduler = instantiate(config.scheduler, optimizer)
-        train_loader = instantiate(config.dataset, train=True)
-        test_loader = instantiate(config.dataset, train=False)
+        train_loader = instantiate(config.dataset, phase="train")
+        valid_loader = instantiate(config.dataset, phase="valid")
 
         trainer = instantiate(
             config.trainer,
-            device,
-            model,
-            optimizer,
-            scheduler,
-            train_loader,
-            test_loader,
+            device=device,
+            model=model,
+            optimizer=optimizer,
+            scheduler=scheduler,
+            train_loader=train_loader,
+            valid_loader=valid_loader,
         )
 
         if resume is not None:
