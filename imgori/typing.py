@@ -9,6 +9,12 @@ PILImage = Image.Image
 PathLike = Union[str, Path]
 
 
+class Phase(str, Enum):
+    TRAIN = "train"
+    VALID = "valid"
+    TEST = "test"
+
+
 class Orientation(int, Enum):
     NORMAL = 0
     FLIP = 1
