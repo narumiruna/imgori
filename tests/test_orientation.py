@@ -20,8 +20,7 @@ def fern() -> PILImage:
 
 
 def test_orientation_do_undo(fern: PILImage) -> None:
-    for orientation in Orientation:
-        img = orientation.do(fern)
-        img = orientation.undo(img)
+    for ori in Orientation:
+        img = ori.undo(ori.do(fern))
         diff = ImageChops.difference(img, fern)
         assert pytest.approx(np.array(diff).sum()) == 0
