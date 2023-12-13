@@ -1,4 +1,4 @@
-# PyTorch Template
+# imgori
 
 ## Usage
 
@@ -10,5 +10,5 @@ pip install poetry
 poetry install
 
 # train model
-poetry run template -c configs/mnist.yaml
+poetry run imgori -c configs/orientation.yaml
 ```
