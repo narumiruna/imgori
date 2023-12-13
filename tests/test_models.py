@@ -1,6 +1,6 @@
 import torch
 
-from imgori.models import LeNet
+from imgori.nn import LeNet
 
 
 @torch.no_grad()

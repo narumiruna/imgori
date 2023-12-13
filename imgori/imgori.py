@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torchvision.transforms._presets import ImageClassification
 
-from .models import mobilenet_v3
+from .nn import mobilenet_v3
 from .typing import Orientation
 from .typing import PathLike
 from .typing import PILImage
