@@ -20,7 +20,7 @@ model:
   num_classes: ${num_classes}
 
 optimizer:
-  name: Adam
+  name: RAdam
   lr: 1.e-3
 
 scheduler:
