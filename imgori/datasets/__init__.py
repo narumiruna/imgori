@@ -1,2 +1,2 @@
 from .mnist import MNISTDataLoader
-from .orientation import RandomOrientationDataLoader
+from .imgori import ImgoriDataLoader

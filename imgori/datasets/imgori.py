@@ -15,7 +15,7 @@ from .utils import get_image_extensions
 from .utils import read_image
 
 
-class RandomOrientationDataset(Dataset):
+class ImgoriDataset(Dataset):
     def __init__(
         self, root: str, phase: Phase, transform: Callable, cache: bool = True
     ) -> None:
@@ -55,7 +55,7 @@ class RandomOrientationDataset(Dataset):
 
 
 @register
-class RandomOrientationDataLoader(DataLoader):
+class ImgoriDataLoader(DataLoader):
     def __init__(
         self,
         root: str,
@@ -65,8 +65,8 @@ class RandomOrientationDataLoader(DataLoader):
         resize_size: int = 256,
         **kwargs,
     ) -> None:
-        super(RandomOrientationDataLoader, self).__init__(
-            dataset=RandomOrientationDataset(
+        super(ImgoriDataLoader, self).__init__(
+            dataset=ImgoriDataset(
                 root,
                 phase=phase,
                 transform=ImageClassification(
