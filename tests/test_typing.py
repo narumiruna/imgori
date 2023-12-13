@@ -6,7 +6,7 @@ import requests
 from PIL import Image
 from PIL import ImageChops
 
-from imgori.datasets.orientation import Orientation
+from imgori.typing import Orientation
 from imgori.typing import PILImage
 
 
