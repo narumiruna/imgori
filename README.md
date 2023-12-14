@@ -10,5 +10,5 @@ pip install poetry
 poetry install
 
 # train model
-poetry run imgori -c configs/orientation.yaml
+poetry run imgori train -c configs/orientation.yaml
 ```
