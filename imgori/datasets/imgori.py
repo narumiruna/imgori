@@ -1,5 +1,7 @@
 from pathlib import Path
+from typing import Any
 from typing import Callable
+from typing import Optional
 
 from loguru import logger
 from mlconfig import register
@@ -10,22 +12,26 @@ from tqdm import tqdm
 
 from ..typing import Orientation
 from ..typing import Phase
-from ..typing import PILImage
 from .utils import get_image_extensions
 from .utils import read_image
 
 
 class ImgoriDataset(Dataset):
     def __init__(
-        self, root: str, phase: Phase, transform: Callable, cache: bool = True
+        self,
+        root: str,
+        phase: Optional[Phase] = None,
+        transform: Optional[Callable] = None,
+        cache: bool = True,
     ) -> None:
         self.root = Path(root)
         self.phase = phase
         self.transform = transform
         self.cache = cache
 
+        pattern = "*" if phase is None else f"{phase}/*"
         exts = get_image_extensions()
-        self.images = [p for p in self.root.rglob(f"{phase}/*") if p.suffix in exts]
+        self.images = [p for p in self.root.rglob(pattern) if p.suffix in exts]
         if cache:
             logger.info("cache images")
             self.images = [read_image(p) for p in tqdm(self.images)]
@@ -33,7 +39,7 @@ class ImgoriDataset(Dataset):
     def __len__(self) -> int:
         return len(self.images) * len(Orientation)
 
-    def __getitem__(self, index: int) -> (PILImage, int):
+    def __getitem__(self, index: int) -> (Any, int):
         ori_len = len(Orientation)
 
         img_index = index // ori_len
@@ -62,7 +68,7 @@ class ImgoriDataLoader(DataLoader):
         phase: Phase,
         batch_size: int,
         crop_size: int = 224,
-        resize_size: int = 256,
+        resize_size: int = 224,
         **kwargs,
     ) -> None:
         super(ImgoriDataLoader, self).__init__(

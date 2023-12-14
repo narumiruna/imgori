@@ -10,7 +10,7 @@ trainer:
   num_classes: ${num_classes}
 
 dataset:
-  name: RandomOrientationDataLoader
+  name: ImgoriDataLoader
   root: data/flip
   batch_size: 32
   num_workers: 0
