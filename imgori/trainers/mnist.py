@@ -24,7 +24,7 @@ class MNISTTrainer(Trainer):
         optimizer: Optimizer,
         scheduler: LRScheduler,
         train_loader: DataLoader,
-        test_loader: DataLoader,
+        valid_loader: DataLoader,
         num_epochs: int,
         num_classes: int,
     ):
@@ -33,7 +33,7 @@ class MNISTTrainer(Trainer):
         self.optimizer = optimizer
         self.scheduler = scheduler
         self.train_loader = train_loader
-        self.test_loader = test_loader
+        self.valid_loader = valid_loader
         self.num_epochs = num_epochs
         self.num_classes = num_classes
 
@@ -43,14 +43,14 @@ class MNISTTrainer(Trainer):
     def fit(self):
         for self.epoch in trange(self.epoch, self.num_epochs + 1):
             train_loss, train_acc = self.train()
-            test_loss, test_acc = self.evaluate()
+            valid_loss, valid_acc = self.validate()
             self.scheduler.step()
 
             metrics = dict(
                 train_loss=train_loss,
                 train_acc=train_acc,
-                test_loss=test_loss,
-                test_acc=test_acc,
+                test_loss=valid_loss,
+                test_acc=valid_acc,
             )
             mlflow.log_metrics(metrics, step=self.epoch)
 
@@ -58,10 +58,10 @@ class MNISTTrainer(Trainer):
             format_string += "train loss: {:.4f}, train acc: {:.4f}, ".format(
                 train_loss, train_acc
             )
-            format_string += "test loss: {:.4f}, test acc: {:.4f}, ".format(
-                test_loss, test_acc
+            format_string += "valid loss: {:.4f}, valid acc: {:.4f}, ".format(
+                valid_loss, valid_acc
             )
-            format_string += "best test acc: {:.4f}.".format(self.best_acc)
+            format_string += "best acc: {:.4f}.".format(self.best_acc)
             tqdm.write(format_string)
 
     def train(self):
@@ -87,13 +87,13 @@ class MNISTTrainer(Trainer):
         return loss_metric.compute().item(), acc_metric.compute().item()
 
     @torch.no_grad()
-    def evaluate(self):
+    def validate(self):
         self.model.eval()
 
         loss_metric = MeanMetric()
         acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes)
 
-        for x, y in tqdm(self.test_loader):
+        for x, y in tqdm(self.valid_loader):
             x = x.to(self.device)
             y = y.to(self.device)
 
@@ -103,12 +103,12 @@ class MNISTTrainer(Trainer):
             loss_metric.update(loss, weight=x.size(0))
             acc_metric.update(output, y)
 
-        test_acc = acc_metric.compute().item()
-        if test_acc > self.best_acc:
-            self.best_acc = test_acc
+        valid_acc = acc_metric.compute().item()
+        if valid_acc > self.best_acc:
+            self.best_acc = valid_acc
             self.save_checkpoint("best.pth")
 
-        return loss_metric.compute().item(), test_acc
+        return loss_metric.compute().item(), valid_acc
 
     def save_checkpoint(self, f: PathLike):
         self.model.eval()

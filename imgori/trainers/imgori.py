@@ -43,8 +43,8 @@ class ImgoriTrainer(Trainer):
     def fit(self) -> None:
         for self.epoch in trange(self.epoch, self.num_epochs + 1):
             self.train()
-            self.scheduler.step()
             self.validate()
+            self.scheduler.step()
 
             mlflow.log_metrics(self.metrics, step=self.epoch)
 
