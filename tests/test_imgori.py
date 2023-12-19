@@ -11,7 +11,7 @@ from imgori.typing import PILImage
 
 @pytest.fixture
 def img() -> PILImage:
-    url = "https://upload.wikimedia.org/wikipedia/commons/f/f6/ROC_mibunsho.jpg"
+    url = "https://www.ris.gov.tw/documents/data/apply-idCard/images/ddccc3f2-2aa9-4e92-9578-41d035af66ea.jpg"
     res = requests.get(url)
     img = Image.open(io.BytesIO(res.content)).convert("RGB")
     return img
