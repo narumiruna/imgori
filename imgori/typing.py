@@ -32,9 +32,9 @@ class Orientation(int, Enum):
             case Orientation.FLIP:
                 img = ImageOps.flip(img)
             case Orientation.CLOCKWISE:
-                img = img.rotate(90)
+                img = img.rotate(90, expand=True)
             case Orientation.COUNTERCLOCKWISE:
-                img = img.rotate(270)
+                img = img.rotate(270, expand=True)
             case Orientation.MIRROR:
                 img = ImageOps.mirror(img)
             case Orientation.MIRROR_FLIP:
@@ -42,10 +42,10 @@ class Orientation(int, Enum):
                 img = ImageOps.flip(img)
             case Orientation.MIRROR_CLOCKWISE:
                 img = ImageOps.mirror(img)
-                img = img.rotate(90)
+                img = img.rotate(90, expand=True)
             case Orientation.MIRROR_COUNTERCLOCKWISE:
                 img = ImageOps.mirror(img)
-                img = img.rotate(270)
+                img = img.rotate(270, expand=True)
             case _:
                 raise ValueError(f"invalid orientation: {self}")
         return img
@@ -57,19 +57,19 @@ class Orientation(int, Enum):
             case Orientation.FLIP:
                 img = ImageOps.flip(img)
             case Orientation.CLOCKWISE:
-                img = img.rotate(-90)
+                img = img.rotate(-90, expand=True)
             case Orientation.COUNTERCLOCKWISE:
-                img = img.rotate(-270)
+                img = img.rotate(-270, expand=True)
             case Orientation.MIRROR:
                 img = ImageOps.mirror(img)
             case Orientation.MIRROR_FLIP:
                 img = ImageOps.flip(img)
                 img = ImageOps.mirror(img)
             case Orientation.MIRROR_CLOCKWISE:
-                img = img.rotate(-90)
+                img = img.rotate(-90, expand=True)
                 img = ImageOps.mirror(img)
             case Orientation.MIRROR_COUNTERCLOCKWISE:
-                img = img.rotate(-270)
+                img = img.rotate(-270, expand=True)
                 img = ImageOps.mirror(img)
             case _:
                 raise ValueError(f"invalid orientation: {self}")
