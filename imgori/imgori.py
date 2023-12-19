@@ -8,7 +8,7 @@ from .typing import Orientation
 from .typing import PathLike
 from .typing import PILImage
 
-DEFAULT_MODEL = "https://github.com/narumiruna/imgori/releases/download/v0.2.1-mobilenet-v3/imgori_mobilenet_v3_small.pth"
+DEFAULT_MODEL = "https://github.com/narumiruna/imgori/releases/download/v0.2.1-mobilenet-v3/imgori_mobilenet_v3_small.pth"  # noqa
 
 
 def load_model(model_path: PathLike, device: torch.device | str = "cpu") -> nn.Module:
