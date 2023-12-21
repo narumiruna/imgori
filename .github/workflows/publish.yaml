@@ -22,7 +22,7 @@ jobs:
           cache: pip
       - uses: abatilo/actions-poetry@v2
         with:
-            poetry-version: ${{ matrix.poetry-version }}
+          poetry-version: ${{ matrix.poetry-version }}
       - name: Publish
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
