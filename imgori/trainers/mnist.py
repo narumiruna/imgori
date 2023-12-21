@@ -37,32 +37,32 @@ class MNISTTrainer(Trainer):
         self.num_epochs = num_epochs
         self.num_classes = num_classes
 
-        self.epoch = 1
+        self.state = {"epoch": 1}
         self.best_acc = 0
 
     def fit(self):
-        for self.epoch in trange(self.epoch, self.num_epochs + 1):
+        start_epoch = self.state["epoch"]
+        for epoch in trange(start_epoch, self.num_epochs + 1):
             train_loss, train_acc = self.train()
             valid_loss, valid_acc = self.validate()
             self.scheduler.step()
 
-            metrics = dict(
-                train_loss=train_loss,
-                train_acc=train_acc,
-                test_loss=valid_loss,
-                test_acc=valid_acc,
-            )
-            mlflow.log_metrics(metrics, step=self.epoch)
+            metrics = {
+                "train_loss": train_loss,
+                "train_acc": train_acc,
+                "test_loss": valid_loss,
+                "test_acc": valid_acc,
+            }
 
-            format_string = "Epoch: {}/{}, ".format(self.epoch, self.num_epochs)
-            format_string += "train loss: {:.4f}, train acc: {:.4f}, ".format(
-                train_loss, train_acc
-            )
-            format_string += "valid loss: {:.4f}, valid acc: {:.4f}, ".format(
-                valid_loss, valid_acc
-            )
-            format_string += "best acc: {:.4f}.".format(self.best_acc)
+            mlflow.log_metrics(metrics, step=epoch)
+
+            format_string = f"Epoch: {epoch}/{self.num_epochs}, "
+            format_string += f"train loss: {train_loss:.4f}, train acc: {train_acc:.4f}, "
+            format_string += f"valid loss: {valid_loss:.4f}, valid acc: {valid_acc:.4f}, "
+            format_string += f"best acc: {self.best_acc:.4f}."
             tqdm.write(format_string)
+
+            self.state["epoch"] = epoch + 1
 
     def train(self):
         self.model.train()
@@ -117,7 +117,7 @@ class MNISTTrainer(Trainer):
             "model": self.model.state_dict(),
             "optimizer": self.optimizer.state_dict(),
             "scheduler": self.scheduler.state_dict(),
-            "epoch": self.epoch,
+            "state": self.state,
             "best_acc": self.best_acc,
         }
 
@@ -130,5 +130,5 @@ class MNISTTrainer(Trainer):
         self.model.load_state_dict(checkpoint["model"])
         self.optimizer.load_state_dict(checkpoint["optimizer"])
         self.scheduler.load_state_dict(checkpoint["scheduler"])
-        self.epoch = checkpoint["epoch"] + 1
+        self.state = checkpoint["state"]
         self.best_acc = checkpoint["best_acc"]
