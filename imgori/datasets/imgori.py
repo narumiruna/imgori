@@ -71,13 +71,11 @@ class ImgoriDataLoader(DataLoader):
         resize_size: int = 224,
         **kwargs,
     ) -> None:
-        super(ImgoriDataLoader, self).__init__(
+        super().__init__(
             dataset=ImgoriDataset(
                 root,
                 phase=phase,
-                transform=ImageClassification(
-                    crop_size=crop_size, resize_size=resize_size
-                ),
+                transform=ImageClassification(crop_size=crop_size, resize_size=resize_size),
             ),
             batch_size=batch_size,
             shuffle=True,

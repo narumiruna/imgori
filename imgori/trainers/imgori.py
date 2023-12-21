@@ -37,21 +37,24 @@ class ImgoriTrainer(Trainer):
         self.num_epochs = num_epochs
         self.num_classes = num_classes
 
-        self.epoch = 1
-        self.metrics = dict(best_acc=0)
+        self.state = {"epoch": 1}
+        self.metrics = {"best_acc": 0}
 
     def fit(self) -> None:
-        for self.epoch in trange(self.epoch, self.num_epochs + 1):
+        start_epoch = self.state["epoch"]
+        for epoch in trange(start_epoch, self.num_epochs + 1):
             self.train()
             self.validate()
             self.scheduler.step()
 
-            mlflow.log_metrics(self.metrics, step=self.epoch)
+            mlflow.log_metrics(self.metrics, step=epoch)
 
-            format_string = "Epoch: {}/{}".format(self.epoch, self.num_epochs)
+            format_string = f"Epoch: {epoch}/{self.num_epochs}"
             for k, v in self.metrics.items():
-                format_string += ", {}: {:.4f}".format(k, v)
+                format_string += f", {k}: {v:.4f}"
             tqdm.write(format_string)
+
+            self.state["epoch"] = epoch + 1
 
     def train(self) -> None:
         self.model.train()
@@ -112,7 +115,7 @@ class ImgoriTrainer(Trainer):
             "model": self.model.state_dict(),
             "optimizer": self.optimizer.state_dict(),
             "scheduler": self.scheduler.state_dict(),
-            "epoch": self.epoch,
+            "state": self.state,
             "metrics": self.metrics,
         }
 
@@ -125,5 +128,5 @@ class ImgoriTrainer(Trainer):
         self.model.load_state_dict(checkpoint["model"])
         self.optimizer.load_state_dict(checkpoint["optimizer"])
         self.scheduler.load_state_dict(checkpoint["scheduler"])
-        self.epoch = checkpoint["epoch"] + 1
+        self.state = checkpoint["state"]
         self.metrics = checkpoint["metrics"]
