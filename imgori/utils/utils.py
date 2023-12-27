@@ -9,7 +9,7 @@ import yaml
 def manual_seed(seed=0):
     """https://pytorch.org/docs/stable/notes/randomness.html"""
     torch.manual_seed(seed)
-    np.random.seed(seed)
+    np.random.seed(seed)  # noqa: NPY002
 
 
 def load_yaml(f):

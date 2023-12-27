@@ -1,5 +1,3 @@
-from typing import Optional
-
 import mlconfig
 from torch import nn
 from torchvision.models import MobileNet_V3_Small_Weights
@@ -7,7 +5,7 @@ from torchvision.models import mobilenet_v3_small
 
 
 @mlconfig.register
-def mobilenet_v3(num_classes: Optional[int] = None) -> nn.Module:
+def mobilenet_v3(num_classes: int | None = None) -> nn.Module:
     model = mobilenet_v3_small(weights=MobileNet_V3_Small_Weights.IMAGENET1K_V1)
 
     if num_classes is not None:

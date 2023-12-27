@@ -1,7 +1,6 @@
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
-from typing import Callable
-from typing import Optional
 
 from loguru import logger
 from mlconfig import register
@@ -20,8 +19,8 @@ class ImgoriDataset(Dataset):
     def __init__(
         self,
         root: str,
-        phase: Optional[Phase] = None,
-        transform: Optional[Callable] = None,
+        phase: Phase | None = None,
+        transform: Callable | None = None,
         cache: bool = True,
     ) -> None:
         self.root = Path(root)

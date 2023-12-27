@@ -30,9 +30,24 @@ imgori = "imgori.cli:cli"
 [tool.ruff]
 exclude = ["build"]
 line-length = 120
+target-version = "py310"
 
 [tool.ruff.lint]
-select = ["B", "C", "E", "F", "I", "UP", "W"]
+select = [
+    "B", # flake8-bugbear
+    "C", # flake8-comprehensions
+    "E", # pycodestyle Error
+    # "EM", # flake8-errmsg
+    "F", # Pyflakes
+    "I", # isort
+    "NPY", # NumPy-specific rules
+    # "PTH", # flake8-use-pathlib
+    # "S", # flake8-bandit
+    # "TRY", # raise-vanilla-args
+    "UP", # pyupgrade
+    "W", # pycodestyle Warning
+
+]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401", "F403"]

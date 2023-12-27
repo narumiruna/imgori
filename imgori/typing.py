@@ -1,12 +1,11 @@
 from enum import Enum
 from pathlib import Path
-from typing import Union
 
 from PIL import Image
 from PIL import ImageOps
 
 PILImage = Image.Image
-PathLike = Union[str, Path]
+PathLike = str | Path
 
 
 class Phase(str, Enum):
