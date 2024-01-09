@@ -7,15 +7,20 @@ from .nn import mobilenet_v3
 from .typing import Orientation
 from .typing import PathLike
 from .typing import PILImage
+from .utils import load_state_dict_from_s3_url
 
-DEFAULT_MODEL = "https://github.com/narumiruna/imgori/releases/download/v0.2.1-mobilenet-v3/imgori_mobilenet_v3_small.pth"  # noqa
+DEFAULT_MODEL = (
+    "https://github.com/narumiruna/imgori/releases/download/v0.2.1-mobilenet-v3/imgori_mobilenet_v3_small.pth"  # noqa
+)
 
 
 def load_model(model_path: PathLike, device: torch.device | str = "cpu") -> nn.Module:
-    if str(model_path).startswith("https://"):
-        state_dict = load_state_dict_from_url(
-            model_path, map_location=device, progress=True
-        )
+    model_path = str(model_path)
+
+    if model_path.startswith("https://"):
+        state_dict = load_state_dict_from_url(model_path, map_location=device, progress=True)
+    elif model_path.startswith("s3://"):
+        state_dict = load_state_dict_from_s3_url(model_path, map_location=device)
     else:
         state_dict = torch.load(model_path, map_location=device)
 
