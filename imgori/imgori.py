@@ -33,10 +33,10 @@ def load_model(model_path: PathLike, device: torch.device | str = "cpu") -> nn.M
 class Imgori:
     def __init__(
         self,
-        model_path: PathLike = DEFAULT_MODEL,
+        model_path: PathLike | None = None,
         device: torch.device | str = "cpu",
     ):
-        self.model = load_model(model_path, device)
+        self.model = load_model(model_path or DEFAULT_MODEL, device)
         self.device = device
         self.transform = ImageClassification(crop_size=224, resize_size=256)
 
