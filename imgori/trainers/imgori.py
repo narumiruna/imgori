@@ -59,8 +59,8 @@ class ImgoriTrainer(Trainer):
     def train(self) -> None:
         self.model.train()
 
-        loss_metric = MeanMetric()
-        acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes)
+        loss_metric = MeanMetric().to(self.device)
+        acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes).to(self.device)
 
         for x, y in tqdm(self.train_loader):
             x = x.to(self.device)
@@ -85,8 +85,8 @@ class ImgoriTrainer(Trainer):
     def validate(self) -> None:
         self.model.eval()
 
-        loss_metric = MeanMetric()
-        acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes)
+        loss_metric = MeanMetric().to(self.device)
+        acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes).to(self.device)
 
         for x, y in tqdm(self.valid_loader):
             x = x.to(self.device)

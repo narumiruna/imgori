@@ -19,18 +19,17 @@ class ImgoriDataset(Dataset):
     def __init__(
         self,
         root: str,
-        phase: Phase | None = None,
+        phase: Phase,
         transform: Callable | None = None,
         cache: bool = True,
     ) -> None:
-        self.root = Path(root)
+        self.root = Path(root) / phase
         self.phase = phase
         self.transform = transform
         self.cache = cache
 
-        pattern = "*" if phase is None else f"{phase}/*"
         exts = get_image_extensions()
-        self.images = [p for p in self.root.rglob(pattern) if p.suffix in exts]
+        self.images = [p for p in self.root.rglob("*") if p.suffix in exts]
         if cache:
             logger.info("cache images")
             self.images = [read_image(p) for p in tqdm(self.images)]
