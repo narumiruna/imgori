@@ -81,6 +81,9 @@ class ImgoriTrainer(Trainer):
             train_acc=acc_metric.compute().item(),
         )
 
+        del loss_metric
+        del acc_metric
+
     @torch.no_grad()
     def validate(self) -> None:
         self.model.eval()
@@ -107,6 +110,9 @@ class ImgoriTrainer(Trainer):
             valid_loss=loss_metric.compute().item(),
             valid_acc=valid_acc,
         )
+
+        del loss_metric
+        del acc_metric
 
     def save_checkpoint(self, f: PathLike) -> None:
         self.model.eval()
