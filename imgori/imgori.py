@@ -10,7 +10,7 @@ from .typing import PILImage
 from .utils import load_state_dict_from_s3_url
 
 DEFAULT_MODEL = (
-    "https://github.com/narumiruna/imgori/releases/download/v0.2.1-mobilenet-v3/imgori_mobilenet_v3_small.pth"  # noqa
+    "https://github.com/narumiruna/imgori/releases/download/v0.2.7-mobilenet-v3/imgori_mobilenet_v3_small.pth"  # noqa
 )
 
 
