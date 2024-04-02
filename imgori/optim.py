@@ -6,3 +6,4 @@ register(optim.RAdam)
 register(optim.SGD)
 
 register(optim.lr_scheduler.StepLR)
+register(optim.lr_scheduler.CosineAnnealingLR)
