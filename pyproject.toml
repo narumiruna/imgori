@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "imgori"
-version = "0.2.8"
+version = "0.2.9"
 description = ""
 authors = ["narumi <toucans-cutouts0f@icloud.com>"]
 
