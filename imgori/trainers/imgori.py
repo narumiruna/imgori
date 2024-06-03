@@ -6,8 +6,8 @@ from mlconfig import register
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 from torch.utils.data import DataLoader
-from torchmetrics import Accuracy
 from torchmetrics import MeanMetric
+from torchmetrics.classification import MulticlassAccuracy
 from tqdm import tqdm
 from tqdm import trange
 
@@ -38,7 +38,7 @@ class ImgoriTrainer(Trainer):
         self.num_classes = num_classes
 
         self.state = {"epoch": 1}
-        self.metrics = {"best_acc": 0}
+        self.metrics = {"best_acc": 0.0}
 
     def fit(self) -> None:
         start_epoch = self.state["epoch"]
@@ -59,8 +59,8 @@ class ImgoriTrainer(Trainer):
     def train(self) -> None:
         self.model.train()
 
-        loss_metric = MeanMetric().to(self.device)
-        acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes).to(self.device)
+        loss_metric = MeanMetric()
+        acc_metric = MulticlassAccuracy(num_classes=self.num_classes)
 
         for x, y in tqdm(self.train_loader):
             x = x.to(self.device)
@@ -73,12 +73,12 @@ class ImgoriTrainer(Trainer):
             loss.backward()
             self.optimizer.step()
 
-            loss_metric.update(loss, weight=x.size(0))
-            acc_metric.update(output, y)
+            loss_metric.update(loss.cpu(), weight=x.size(0))
+            acc_metric.update(output.cpu(), y.cpu())
 
         self.metrics.update(
-            train_loss=loss_metric.compute().item(),
-            train_acc=acc_metric.compute().item(),
+            train_loss=float(loss_metric.compute()),
+            train_acc=float(acc_metric.compute()),
         )
 
         del loss_metric
@@ -88,8 +88,8 @@ class ImgoriTrainer(Trainer):
     def validate(self) -> None:
         self.model.eval()
 
-        loss_metric = MeanMetric().to(self.device)
-        acc_metric = Accuracy(task="multiclass", num_classes=self.num_classes).to(self.device)
+        loss_metric = MeanMetric()
+        acc_metric = MulticlassAccuracy(num_classes=self.num_classes)
 
         for x, y in tqdm(self.valid_loader):
             x = x.to(self.device)
@@ -98,16 +98,16 @@ class ImgoriTrainer(Trainer):
             output = self.model(x)
             loss = F.cross_entropy(output, y)
 
-            loss_metric.update(loss, weight=x.size(0))
-            acc_metric.update(output, y)
+            loss_metric.update(loss.cpu(), weight=x.size(0))
+            acc_metric.update(output.cpu(), y.cpu())
 
-        valid_acc = acc_metric.compute().item()
+        valid_acc = float(acc_metric.compute())
         if valid_acc > self.metrics["best_acc"]:
             self.metrics["best_acc"] = valid_acc
             self.save_checkpoint("best.pth")
 
         self.metrics.update(
-            valid_loss=loss_metric.compute().item(),
+            valid_loss=float(loss_metric.compute()),
             valid_acc=valid_acc,
         )
 
