@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "imgori"
-version = "0.3.2"
+version = "0.4.0"
 description = ""
 authors = ["narumi <toucans-cutouts0f@icloud.com>"]
 include = ["imgori/models/imgori_mobilenet_v3_small.pth"]
