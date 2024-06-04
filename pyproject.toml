@@ -3,6 +3,7 @@ name = "imgori"
 version = "0.3.2"
 description = ""
 authors = ["narumi <toucans-cutouts0f@icloud.com>"]
+include = ["imgori/models/imgori_mobilenet_v3_small.pth"]
 
 [tool.poetry.dependencies]
 python = "^3.10"

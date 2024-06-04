@@ -25,6 +25,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: poetry
+      -
+        name: Download default model
+        run: wget https://github.com/narumiruna/imgori/releases/download/v0.2.7-mobilenet-v3/imgori_mobilenet_v3_small.pth -O imgori/models/imgori_mobilenet_v3_small.pth
       - 
         name: Publish
         env:
