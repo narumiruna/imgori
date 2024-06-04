@@ -2,7 +2,7 @@ from pathlib import Path
 
 from ..utils import download_url
 
-DEFAULT_MODEL = Path(__file__).parent / "imgori_mobilenet_v3_small.pth"
+DEFAULT_MODEL = (Path(__file__).parent / "imgori_mobilenet_v3_small.pth").as_posix()
 
 
 if not DEFAULT_MODEL.exists():
