@@ -624,13 +624,13 @@ omegaconf = ">=2.3.0,<3.0.0"
 
 [[package]]
 name = "mlflow-skinny"
-version = "2.13.0"
+version = "2.14.0"
 description = "MLflow is an open source platform for the complete machine learning lifecycle"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mlflow_skinny-2.13.0-py3-none-any.whl", hash = "sha256:2d08d6ea7d0e4ab8786e12c9a80f6105b6d2a51ca7d16b617407db6bb58921b1"},
-    {file = "mlflow_skinny-2.13.0.tar.gz", hash = "sha256:a47865f908c650ee04d2c00bd4245a259ee2c9bc610cff830b8903396335b69e"},
+    {file = "mlflow_skinny-2.14.0-py3-none-any.whl", hash = "sha256:a634acf3061fc49a530c6a0f4f2159b04465394d08d21101ace7f7392eed4f42"},
+    {file = "mlflow_skinny-2.14.0.tar.gz", hash = "sha256:769e92694c2be11935f57ca489d873901c50b24280bac63e7d555d2cc9598b7b"},
 ]
 
 [package.dependencies]
@@ -640,8 +640,8 @@ cloudpickle = "<4"
 entrypoints = "<1"
 gitpython = ">=3.1.9,<4"
 importlib-metadata = ">=3.7.0,<4.7.0 || >4.7.0,<8"
-opentelemetry-api = ">=1.0.0,<3"
-opentelemetry-sdk = ">=1.0.0,<3"
+opentelemetry-api = ">=1.9.0,<3"
+opentelemetry-sdk = ">=1.9.0,<3"
 packaging = "<25"
 protobuf = ">=3.12.0,<5"
 pytz = "<2025"
@@ -656,6 +656,7 @@ extras = ["azureml-core (>=1.2.0)", "boto3", "botocore", "google-cloud-storage (
 gateway = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "pydantic (>=1.0,<3)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<1)"]
 genai = ["aiohttp (<4)", "boto3 (>=1.28.56,<2)", "fastapi (<1)", "pydantic (>=1.0,<3)", "slowapi (>=0.1.9,<1)", "tiktoken (<1)", "uvicorn[standard] (<1)", "watchfiles (<1)"]
 jfrog = ["mlflow-jfrog-plugin"]
+langchain = ["langchain (>=0.1.0,<=0.2.3)"]
 sqlserver = ["mlflow-dbstore"]
 xethub = ["mlflow-xethub"]
 
@@ -1722,4 +1723,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "1ab18ce2cb1fe47e51965e4b306fcfe986387351f586a3adc2f93a454c9f9ab3"
+content-hash = "33c55aa5f9d5ed81b1209681d436e1f86d1f89817d35e5877ba7de7c375f7387"
