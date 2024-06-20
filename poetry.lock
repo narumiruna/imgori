@@ -624,13 +624,13 @@ omegaconf = ">=2.3.0,<3.0.0"
 
 [[package]]
 name = "mlflow-skinny"
-version = "2.14.0"
+version = "2.14.1"
 description = "MLflow is an open source platform for the complete machine learning lifecycle"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mlflow_skinny-2.14.0-py3-none-any.whl", hash = "sha256:a634acf3061fc49a530c6a0f4f2159b04465394d08d21101ace7f7392eed4f42"},
-    {file = "mlflow_skinny-2.14.0.tar.gz", hash = "sha256:769e92694c2be11935f57ca489d873901c50b24280bac63e7d555d2cc9598b7b"},
+    {file = "mlflow_skinny-2.14.1-py3-none-any.whl", hash = "sha256:2a9dfb8c80c22bbf7516856e956531d638bb0d68464c075bbc863f7cbc70a855"},
+    {file = "mlflow_skinny-2.14.1.tar.gz", hash = "sha256:2d3e1d25a3c66510b27bd0c8b6454b9ebb8ea000bbe984c5e551d31e15cb889c"},
 ]
 
 [package.dependencies]
@@ -1724,4 +1724,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "2645ead32430d42a2a4209d139238203eee8c3ffffff1b3cb12b0d882ed21c96"
+content-hash = "d7abef6b277ed161b4529f0ccabf331b3054a2cf660977c2e6a1db9f67f2ca0e"
