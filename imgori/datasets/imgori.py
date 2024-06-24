@@ -29,25 +29,23 @@ class ImgoriDataset(Dataset):
         self.cache = cache
 
         exts = get_image_extensions()
-        self.images = [p for p in self.root.rglob("*") if p.suffix in exts]
+        self.image_paths = [p for p in self.root.rglob("*") if p.suffix in exts]
         if cache:
             logger.info("cache images")
-            self.images = [read_image(p) for p in tqdm(self.images)]
+            self.images = [read_image(p) for p in tqdm(self.image_paths)]
 
     def __len__(self) -> int:
-        return len(self.images) * len(Orientation)
+        return len(self.image_paths) * len(Orientation)
 
-    def __getitem__(self, index: int) -> (Any, int):
+    def __getitem__(self, index: int) -> tuple[Any, int]:
         ori_len = len(Orientation)
 
         img_index = index // ori_len
         ori_index = index % ori_len
-        assert 0 <= img_index < len(self.images)
+        assert 0 <= img_index < len(self.image_paths)
         assert 0 <= ori_index < ori_len
 
-        img = self.images[img_index]
-        if not self.cache:
-            img = read_image(img)
+        img = self.images[img_index] if self.cache else read_image(self.image_paths[img_index])
 
         ori = Orientation(ori_index)
         img = ori.do(img)
