@@ -1,7 +1,7 @@
-import mlflow
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import wandb
 from mlconfig import register
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
@@ -47,7 +47,7 @@ class ImgoriTrainer(Trainer):
             self.validate()
             self.scheduler.step()
 
-            mlflow.log_metrics(self.metrics, step=epoch)
+            wandb.log(self.metrics, step=epoch)
 
             format_string = f"Epoch: {epoch}/{self.num_epochs}"
             for k, v in self.metrics.items():
@@ -126,7 +126,7 @@ class ImgoriTrainer(Trainer):
         }
 
         torch.save(checkpoint, f)
-        mlflow.log_artifact(f)
+        wandb.save(f)
 
     def resume(self, f: PathLike) -> None:
         checkpoint = torch.load(f, map_location=self.device)
