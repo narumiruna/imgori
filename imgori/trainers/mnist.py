@@ -1,7 +1,7 @@
-import mlflow
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import wandb
 from mlconfig import register
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
@@ -54,7 +54,7 @@ class MNISTTrainer(Trainer):
                 "test_acc": valid_acc,
             }
 
-            mlflow.log_metrics(metrics, step=epoch)
+            wandb.log(metrics, step=epoch)
 
             format_string = f"Epoch: {epoch}/{self.num_epochs}, "
             format_string += f"train loss: {train_loss:.4f}, train acc: {train_acc:.4f}, "
@@ -122,7 +122,7 @@ class MNISTTrainer(Trainer):
         }
 
         torch.save(checkpoint, f)
-        mlflow.log_artifact(f)
+        wandb.save(f)
 
     def resume(self, f: PathLike):
         checkpoint = torch.load(f, map_location=self.device)
