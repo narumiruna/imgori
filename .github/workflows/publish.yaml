@@ -16,12 +16,14 @@ jobs:
         poetry-version: ["1.8.3"]
     steps:
       - uses: actions/checkout@v4
-      - name: Install poetry
-        run: pipx install poetry==${{ matrix.poetry-version }}
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: poetry
+      - name: Install poetry
+        run: |
+          pip install pipx
+          pipx install poetry==${{ matrix.poetry-version }}
+          poetry env info
       - name: Download default model
         run: wget https://github.com/narumiruna/imgori/releases/download/v0.2.7-mobilenet-v3/imgori_mobilenet_v3_small.pth -O imgori/models/imgori_mobilenet_v3_small.pth
       - name: Publish
