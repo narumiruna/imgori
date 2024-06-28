@@ -19,11 +19,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install poetry
-        run: |
-          pip install pipx
-          pipx install poetry==${{ matrix.poetry-version }}
-          poetry env info
+      - uses: narumiruna/setup-poetry@v1
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
       - name: Download default model
         run: wget https://github.com/narumiruna/imgori/releases/download/v0.2.7-mobilenet-v3/imgori_mobilenet_v3_small.pth -O imgori/models/imgori_mobilenet_v3_small.pth
       - name: Publish
