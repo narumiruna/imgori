@@ -13,7 +13,7 @@ torchmetrics = "^1.2.0"
 tqdm = "^4.66.1"
 loguru = "^0.7.2"
 mlconfig = "^0.2.2"
-boto3 = "^1.34.141"
+boto3 = "^1.34.142"
 wandb = "^0.17.4"
 
 [tool.poetry.group.dev.dependencies]
