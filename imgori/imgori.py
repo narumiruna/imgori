@@ -28,7 +28,7 @@ class Imgori:
         if model_path.startswith(("s3://", "http://", "https://")):
             model_path = download_url(model_path)
 
-        state_dict = torch.load(model_path, map_location=self.device)
+        state_dict = torch.load(model_path, map_location=self.device, weights_only=True)
 
         model = mobilenet_v3(num_classes=len(Orientation))
         model.load_state_dict(state_dict["model"])

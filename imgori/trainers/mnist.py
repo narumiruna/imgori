@@ -125,7 +125,7 @@ class MNISTTrainer(Trainer):
         wandb.save(f)
 
     def resume(self, f: PathLike):
-        checkpoint = torch.load(f, map_location=self.device)
+        checkpoint = torch.load(f, map_location=self.device, weights_only=True)
 
         self.model.load_state_dict(checkpoint["model"])
         self.optimizer.load_state_dict(checkpoint["optimizer"])
