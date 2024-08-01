@@ -9,8 +9,8 @@ from torch.utils.data import Dataset
 from torchvision.transforms._presets import ImageClassification
 from tqdm import tqdm
 
-from ..typing import Orientation
-from ..typing import Phase
+from ..types import Orientation
+from ..types import Phase
 from .utils import get_image_extensions
 from .utils import read_image
 

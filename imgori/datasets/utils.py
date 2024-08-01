@@ -1,8 +1,8 @@
 
 from PIL import Image
 
-from ..typing import PathLike
-from ..typing import PILImage
+from ..types import PathLike
+from ..types import PILImage
 
 
 def get_image_extensions() -> list[str]:

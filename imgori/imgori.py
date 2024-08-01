@@ -4,8 +4,8 @@ from torchvision.transforms._presets import ImageClassification
 
 from .models import DEFAULT_MODEL
 from .nn import mobilenet_v3
-from .typing import Orientation
-from .typing import PILImage
+from .types import Orientation
+from .types import PILImage
 from .utils import download_url
 
 

@@ -11,7 +11,7 @@ from torchmetrics import MeanMetric
 from tqdm import tqdm
 from tqdm import trange
 
-from ..typing import PathLike
+from ..types import PathLike
 from .trainer import Trainer
 
 

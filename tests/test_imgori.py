@@ -5,8 +5,8 @@ import requests
 from PIL import Image
 
 from imgori import Imgori
-from imgori.typing import Orientation
-from imgori.typing import PILImage
+from imgori.types import Orientation
+from imgori.types import PILImage
 
 
 @pytest.fixture
