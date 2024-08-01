@@ -7,6 +7,7 @@ from .nn import mobilenet_v3
 from .types import Orientation
 from .types import PILImage
 from .utils import download_url
+from .utils import timeit
 
 
 class Imgori:
@@ -34,6 +35,7 @@ class Imgori:
         model.eval()
         return model.to(self.device)
 
+    @timeit
     @torch.no_grad()
     def __call__(self, img: PILImage) -> Orientation:
         img_tensor = self.transform(img)
