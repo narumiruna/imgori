@@ -42,4 +42,4 @@ class Imgori:
         img_tensor = img_tensor.unsqueeze(0).to(self.device)
         output = self.model(img_tensor)
         output = output.argmax(dim=1).item()
-        return Orientation(output)
+        return Orientation.from_int(output)

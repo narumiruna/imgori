@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 from pathlib import Path
 
@@ -9,20 +11,42 @@ PathLike = str | Path
 
 
 class Phase(str, Enum):
-    TRAIN = "train"
-    VALID = "valid"
-    TEST = "test"
+    TRAIN = "TRAIN"
+    VALID = "VALID"
+    TEST = "TEST"
 
 
-class Orientation(int, Enum):
-    NORMAL = 0
-    FLIP = 1
-    CLOCKWISE = 2
-    COUNTERCLOCKWISE = 3
-    MIRROR = 4
-    MIRROR_FLIP = 5
-    MIRROR_CLOCKWISE = 6
-    MIRROR_COUNTERCLOCKWISE = 7
+class Orientation(str, Enum):
+    NORMAL = "NORMAL"
+    FLIP = "FLIP"
+    CLOCKWISE = "CLOCKWISE"
+    COUNTERCLOCKWISE = "COUNTERCLOCKWISE"
+    MIRROR = "MIRROR"
+    MIRROR_FLIP = "MIRROR_FLIP"
+    MIRROR_CLOCKWISE = "MIRROR_CLOCKWISE"
+    MIRROR_COUNTERCLOCKWISE = "MIRROR_COUNTERCLOCKWISE"
+
+    @staticmethod
+    def from_int(v: int) -> Orientation:
+        match v:
+            case 0:
+                return Orientation.NORMAL
+            case 1:
+                return Orientation.FLIP
+            case 2:
+                return Orientation.CLOCKWISE
+            case 3:
+                return Orientation.COUNTERCLOCKWISE
+            case 4:
+                return Orientation.MIRROR
+            case 5:
+                return Orientation.MIRROR_FLIP
+            case 6:
+                return Orientation.MIRROR_CLOCKWISE
+            case 7:
+                return Orientation.MIRROR_COUNTERCLOCKWISE
+            case _:
+                raise ValueError(f"invalid orientation: {v}")
 
     def do(self, img: PILImage) -> PILImage:
         match self:
