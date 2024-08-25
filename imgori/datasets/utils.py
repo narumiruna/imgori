@@ -1,4 +1,3 @@
-
 from PIL import Image
 
 from ..types import PathLike
@@ -10,5 +9,7 @@ def get_image_extensions() -> list[str]:
     return list(Image.EXTENSION.keys())
 
 
-def read_image(f: PathLike) -> PILImage:
-    return Image.open(f).convert("RGB")
+def open_image(f: PathLike) -> PILImage:
+    with open(f, "rb") as f:
+        img = Image.open(f)
+        return img.convert("RGB")

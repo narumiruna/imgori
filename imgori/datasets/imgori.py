@@ -12,7 +12,7 @@ from tqdm import tqdm
 from ..types import Orientation
 from ..types import Phase
 from .utils import get_image_extensions
-from .utils import read_image
+from .utils import open_image
 
 
 class ImgoriDataset(Dataset):
@@ -32,7 +32,7 @@ class ImgoriDataset(Dataset):
         self.image_paths = [p for p in self.root.rglob("*") if p.suffix in exts]
         if cache:
             logger.info("cache images")
-            self.images = [read_image(p) for p in tqdm(self.image_paths)]
+            self.images = [open_image(p) for p in tqdm(self.image_paths)]
 
     def __len__(self) -> int:
         return len(self.image_paths) * len(Orientation)
@@ -45,7 +45,7 @@ class ImgoriDataset(Dataset):
         assert 0 <= img_index < len(self.image_paths)
         assert 0 <= ori_index < ori_len
 
-        img = self.images[img_index] if self.cache else read_image(self.image_paths[img_index])
+        img = self.images[img_index] if self.cache else open_image(self.image_paths[img_index])
 
         ori = Orientation(ori_index)
         img = ori.do(img)
