@@ -1,29 +1,25 @@
-device: mps
-num_classes: 8
-batch_size: 32
+device: cuda
+batch_size: 256
 
 trainer:
-  name: ImgoriTrainer
+  name: ColorJitterTrainer
   num_epochs: 20
-  num_classes: ${num_classes}
 
 train_loader:
   name: ColorJitterDataLoader
-  root: data/flip
-  phase: train
+  root: data/widerface/WIDER_train
   batch_size: ${batch_size}
-  num_workers: 0
+  num_workers: 4
 
 valid_loader:
   name: ColorJitterDataLoader
-  root: data/flip
-  phase: valid
+  root: data/widerface/WIDER_val
   batch_size: ${batch_size}
-  num_workers: 0
+  num_workers: 4
 
 model:
   name: mobilenet_v3
-  num_classes: ${num_classes}
+  num_classes: 4
 
 optimizer:
   name: Adam

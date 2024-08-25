@@ -45,6 +45,7 @@ class ColorJitterDataset(Dataset):
         contrast = 1.0
         saturation = 1.0
         hue = 0.0
+
         match random.randint(0, 4):
             case 0:
                 pass
@@ -63,13 +64,15 @@ class ColorJitterDataset(Dataset):
             case _:
                 raise ValueError("Invalid randint value")
 
-        return {
-            "image": img,
-            "brightness": brightness,
-            "contrast": contrast,
-            "saturation": saturation,
-            "hue": hue,
-        }
+        # return {
+        #     "image": img,
+        #     "brightness": brightness,
+        #     "contrast": contrast,
+        #     "saturation": saturation,
+        #     "hue": hue,
+        # }
+
+        return img, torch.tensor([brightness, contrast, saturation, hue], dtype=torch.float32)
 
     def __len__(self) -> int:
         return len(self.samples)
