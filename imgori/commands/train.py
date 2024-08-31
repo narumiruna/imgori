@@ -16,6 +16,8 @@ from ..utils import manual_seed
 @click.option("-c", "--config-file", type=click.Path(path_type=Path), default="configs/mnist.yaml")
 @click.option("-r", "--resume", type=click.Path(path_type=Path), default=None)
 def train(config_file: Path, resume: Path):
+    wandb.init(dir="./outputs/wandb")
+
     wandb.login()
 
     with wandb.init():

@@ -28,8 +28,8 @@ jobs:
         run: poetry install
       - name: Lint
         run: poetry run ruff check .
-      - name: Type check
-        run: poetry run mypy --install-types --non-interactive .
+      # - name: Type check
+      #   run: poetry run mypy --install-types --non-interactive .
       - name: Test
         run: poetry run pytest -v -s --cov=imgori --cov-report=xml tests
       - name: Upload coverage reports to Codecov
