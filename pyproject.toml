@@ -14,7 +14,7 @@ tqdm = "^4.66.5"
 loguru = "^0.7.2"
 mlconfig = "^0.2.2"
 boto3 = "^1.35.28"
-wandb = "^0.18.1"
+wandb = "^0.18.2"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.11.2"
