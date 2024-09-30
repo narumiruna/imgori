@@ -9,6 +9,11 @@ from torch.utils.data import Dataset
 from torchvision import tv_tensors
 from torchvision.transforms import v2
 
+CLASS_TO_INDEX = {
+    "motion": 0,
+    "out_of_focus": 1,
+}
+
 
 def make_dataset(root: str) -> tuple[Path, Path]:
     root = Path(root)
@@ -32,6 +37,15 @@ def make_dataset(root: str) -> tuple[Path, Path]:
     return samples
 
 
+def get_class_index(path: Path) -> int:
+    if path.name.startswith("out_of_focus"):
+        return CLASS_TO_INDEX["out_of_focus"]
+    elif path.name.startswith("motion"):
+        return CLASS_TO_INDEX["motion"]
+    else:
+        raise ValueError(f"Unknown label: {path}")
+
+
 class CUHK(Dataset):
     def __init__(self, root: str, transform=None) -> None:
         """https://www.cse.cuhk.edu.hk/leojia/projects/dblurdetect/"""
@@ -48,7 +62,12 @@ class CUHK(Dataset):
         if self.transform is not None:
             img, gt = self.transform(img, gt)
 
-        return img, gt
+        class_index = get_class_index(gt_path)
+        return {
+            "image": img,
+            "mask": gt,
+            "class_index": class_index,
+        }
 
     def __len__(self) -> int:
         return len(self.samples)
