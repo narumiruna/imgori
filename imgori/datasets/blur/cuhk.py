@@ -32,8 +32,9 @@ def make_dataset(root: str) -> tuple[Path, Path]:
     return samples
 
 
-class CUHKDataset(Dataset):
+class CUHK(Dataset):
     def __init__(self, root: str, transform=None) -> None:
+        """https://www.cse.cuhk.edu.hk/leojia/projects/dblurdetect/"""
         self.root = Path(root)
         self.transform = transform
         self.samples = make_dataset(root)
@@ -62,7 +63,7 @@ class CUHKDataLoader(DataLoader):
                 v2.ToDtype(torch.float32, scale=True),
             ]
         )
-        dataset = CUHKDataset(root, transform=transform)
+        dataset = CUHK(root, transform=transform)
         super().__init__(
             dataset,
             # collate_fn=lambda batch: tuple(zip(*batch)),
