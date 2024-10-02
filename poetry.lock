@@ -1774,21 +1774,21 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "wandb"
-version = "0.18.2"
+version = "0.18.3"
 description = "A CLI and library for interacting with the Weights & Biases API."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "wandb-0.18.2-py3-none-any.whl", hash = "sha256:45eee0a41db776390de97c06dc1d72256acf9ffa63f1be46343670383c9235f7"},
-    {file = "wandb-0.18.2-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:9aa061328605baeda926629ca0907c8c2f7eb7091b48d6be94e2696d20f2e721"},
-    {file = "wandb-0.18.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:4826089be875ac051e59ccc2af5fbaad534b5c3db0857d9a331e9c2210455855"},
-    {file = "wandb-0.18.2-py3-none-macosx_11_0_x86_64.whl", hash = "sha256:eca6d14e0fcfb9ba9369733b977965cf02b22a5803dcb8a68be1087fda0e2543"},
-    {file = "wandb-0.18.2-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ebedaf482e4064ecb9bb977e4c5704bfd23867bda8126700895b284f2cbebff9"},
-    {file = "wandb-0.18.2-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:21ca6c2b7e75971fa55256e870bd80f9099b2a0bc31f2a6008c397157cb46aa8"},
-    {file = "wandb-0.18.2-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:827854221356aecfb749e6f95f09b22101612bff53836ef449779278de22146e"},
-    {file = "wandb-0.18.2-py3-none-win32.whl", hash = "sha256:cb7b1e40da03efac524879272913cea0df256d0ab9a1781c46bcb60ca7f7b18c"},
-    {file = "wandb-0.18.2-py3-none-win_amd64.whl", hash = "sha256:7cff3f0aa3619cec28bc5328c4763ae5e991741db09e52074deb42120863107c"},
-    {file = "wandb-0.18.2.tar.gz", hash = "sha256:1f1f574e311e9af061326ba213efa11d728310c0c3d4549ff17b51c768a62aa9"},
+    {file = "wandb-0.18.3-py3-none-any.whl", hash = "sha256:7da64f7da0ff7572439de10bfd45534e8811e71e78ac2ccc3b818f1c0f3a9aef"},
+    {file = "wandb-0.18.3-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:6674d8a5c40c79065b9c7eb765136756d5ebc9457a5f9abc820a660fb23f8b67"},
+    {file = "wandb-0.18.3-py3-none-macosx_11_0_arm64.whl", hash = "sha256:741f566e409a2684d3047e4cc25e8e914d78196b901190937b24b6abb8b052e5"},
+    {file = "wandb-0.18.3-py3-none-macosx_11_0_x86_64.whl", hash = "sha256:8be5e877570b693001c52dcc2089e48e6a4dcbf15f3adf5c9349f95148b59d58"},
+    {file = "wandb-0.18.3-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d788852bd4739fa18de3918f309c3a955b5cef3247fae1c40df3a63af637e1a0"},
+    {file = "wandb-0.18.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ab81424eb207d78239a8d69c90521a70074fb81e3709055484e43c76fe44dc08"},
+    {file = "wandb-0.18.3-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:2c91315b8b62423eae18577d66a4b4bb8e4341a7d5c849cb2963e3b3dff0bf6d"},
+    {file = "wandb-0.18.3-py3-none-win32.whl", hash = "sha256:92a647dab783938ec87776a9fae8a13e72e6dad939c53e357cdea9d2570f0ad8"},
+    {file = "wandb-0.18.3-py3-none-win_amd64.whl", hash = "sha256:29cac2cfa3124241fed22cfedc9a52e1500275ee9bbb0b428ce4bf63c4723bf0"},
+    {file = "wandb-0.18.3.tar.gz", hash = "sha256:eb2574cea72bc908c6ce1b37edf7a889619e6e06e1b4714eecfe0662ded43c06"},
 ]
 
 [package.dependencies]
@@ -1811,7 +1811,7 @@ gcp = ["google-cloud-storage"]
 importers = ["filelock", "mlflow", "polars (<=1.2.1)", "rich", "tenacity"]
 kubeflow = ["google-cloud-storage", "kubernetes", "minio", "sh"]
 launch = ["awscli", "azure-containerregistry", "azure-identity", "azure-storage-blob", "boto3", "botocore", "chardet", "google-auth", "google-cloud-aiplatform", "google-cloud-artifact-registry", "google-cloud-compute", "google-cloud-storage", "iso8601", "jsonschema", "kubernetes", "kubernetes-asyncio", "nbconvert", "nbformat", "optuna", "pydantic", "pyyaml (>=6.0.0)", "tomli", "typing-extensions"]
-media = ["bokeh", "imageio", "moviepy", "numpy", "pillow", "plotly (>=5.18.0)", "rdkit-pypi", "soundfile"]
+media = ["bokeh", "imageio", "moviepy", "numpy", "pillow", "plotly (>=5.18.0)", "rdkit", "soundfile"]
 models = ["cloudpickle"]
 perf = ["orjson"]
 sweeps = ["sweeps (>=0.2.0)"]
@@ -1834,4 +1834,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "0469a505a47f69d349624f5c070da274990518103635bd243570e4f44b05c96a"
+content-hash = "1aac753f3bc3cae3e1da9c594f228c515b7268cc0470677c8a2cd4fd23e6ecb2"
