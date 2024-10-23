@@ -17,7 +17,7 @@ boto3 = "^1.35.46"
 wandb = "^0.18.5"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.12.1"
+mypy = "^1.13.0"
 pytest = "^8.3.3"
 pytest-cov = "^5.0.0"
 ruff = "^0.7.0"
