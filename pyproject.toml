@@ -9,7 +9,7 @@ include = ["imgori/models/imgori_mobilenet_v3_small.pth"]
 python = "^3.10"
 torch = ">=2.1.1"
 torchvision = ">=0.16.1"
-torchmetrics = "^1.5.0"
+torchmetrics = "^1.5.1"
 tqdm = "^4.66.5"
 loguru = "^0.7.2"
 mlconfig = "^0.2.2"
